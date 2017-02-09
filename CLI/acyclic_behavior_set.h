@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   acyclic_behavior_set.h
  * Author: nonwhite
  *
@@ -68,7 +68,7 @@ namespace structureoptimizer {
 					// (a2) Update matrix representation and get ancestors of V_j
 					ancestors = VARSET( variableCount ) ;
 					for(int i = 0 ; i < variableCount  ; i++){
-						if( VARSET_GET( parents , i ) )
+						if( VARSET_GET( parents , i ) || ( m[ i ] & parents ).any() )
 							VARSET_SET( m[ i ] , v_j ) ;
 						if( VARSET_GET( m[ i ] , v_j ) )
 							VARSET_SET( ancestors , i ) ;
@@ -103,7 +103,6 @@ namespace structureoptimizer {
 				for( int i = 0 ; i < children.size() ; i++){
 					int ch = children[ i ] ;
 					if( VARSET_GET( ancestors , ch ) ){
-						VARSET_CLEAR( ancestors , ch ) ;
 						visit( ch ) ;
 					}
 				}
